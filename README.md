@@ -120,8 +120,21 @@ Common hooks built into react include:
     - Comparable to `componentDidMount` or `componentDidUpdate` from classes
     - Can return a function to execute on component unmount
     - Able to add a list of items at the end that are 'dependencies'. Aka useEffect will only trigger on re-render if one of those items changes.
+3. useContext() -> Used for reference the current value of a global context
+    - Accepts a context object (which came from React.createContext()) and returns the current context value for that object
+    - The current context value is determined by the `value` prop of the nearest `<MyContext.Provider>` above the component
+    - When the context is updated, a re-render is triggered for this component
 
-    
+
+
+You can create custom hooks to reuse **Stateful logic**. Keep in mind that they do not reuse 
+state itself, just the stateful logic. Each invocation is independent.
+
+What is the difference between custom hooks and vanilla JS functions?
+    - When React sees you invoke a function that starts with `use`, it will automatically allow that function to invoke hooks within it.
+    - In other words, custom hooks can invoke other hooks, and their name beginning with `use` gives them this power.
+
+
 
 
 # General Concepts
