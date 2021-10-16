@@ -42,6 +42,7 @@ This means that the HTML page is pre-generated (instead of relying on the javasc
 This allows you to see content on the page while the javascript is still loading for that page.
 
 There are two forms of pre-rendering
+
 **Note** NextJS lets you vary your strategy of pre-rendering from page to page... damn
 
 ### Static Generation
@@ -81,8 +82,46 @@ export async function getServerSideProps(context) {
 }
 ```
 
+## Data Fetching
+In addition to `getStaticProps` and `getServerSideProps` which are pre-rendering data loads,
+you can also use client-side rendering to get data not needed for the initial page load.
+
+The NextJS team created and recommends using `SWR` for this.
+
+## API Routes
+NextJS lets you create **Serverless Functions**, which are simple lambdas that act like Express request handlers.
+
+These routes should be default exports of files under `pages/api`. Much like with other pages, the route will match the corresponding file and path name.
 
 
+# SWR
+React hook for simple data fetching with cache validation etc. E.x.
+```
+import useSWR from 'swr'
+
+function Profile() {
+  const { data, error } = useSWR('/api/user', fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return <div>hello {data.name}!</div>
+}
+```
+
+# React
+
+## Hooks
+Hooks are a feature to allow state and other React features within functional components
+
+Common hooks built into react include:
+1. useState() -> Maintain component state. Returns the value and a mutator.
+2. useEffect() -> Run side effects, such as data fetching.
+    - Run **after** flushing changes to the DOM. Post Render.
+    - Comparable to `componentDidMount` or `componentDidUpdate` from classes
+    - Can return a function to execute on component unmount
+    - Able to add a list of items at the end that are 'dependencies'. Aka useEffect will only trigger on re-render if one of those items changes.
+
+    
 
 
 # General Concepts
