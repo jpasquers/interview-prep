@@ -145,3 +145,53 @@ A backend only content repository. Accessible via an API and completely disconne
 the presentation.
 
 AEM has Headless CMS capabilities.
+
+
+# Design and Clean Code Patterns
+
+## SOLID - OO Design.
+1. **Single Responsibility Principle** - "There should never be more than one reason for a class to change"
+2. **Open Closed** - Pieces of software should be open for extension but closed for modification. 
+  - Nowadays refers more to the usage of abstracted interfaces, where new implementations can be created and substituted.
+3. **Liskov Substitution** -  "Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it."
+  - Enforces the notion of strong behavioral subtyping.
+4. **Interface Segregation** -  "Many client-specific interfaces are better than one general-purpose interface."
+  - "When clients depend on methods that they do not use, they become subject to the changes enforced on those methods.
+5. **Dependency inversion** - "Depend on abstractions not concretions"
+  - A specific form of loose coupling
+
+## Functional Programming
+"Programs are constructed by applying and composing functions"
+
+Key aspects:
+1. Functions are first class citizens: Can be defined as variables, passed as arguments, and so on.
+2. Leverages higher order functions, which can take in other functions as args and return them.
+3. Relies on pure functions, which always return the same output for the same set of input, and have no side affects to external scope.
+
+## Common Design Patterns
+1. Delegate - A class which contains a specific other class/interface and implements the same interface. It *delegates* most behavior to the internal object, but adds functionality as needed.
+  - A proxy is a very specific case of a delegate
+  - Delegation is an alternative to inheritance, each has paricular benefits.
+2. Adapter - A way to bridge interfaces while maintaining loose coupling.
+  - Good example is our OIDC user and application identity interfaces.
+3. Builder - A way to allow the construction of objects with complex varieties that can be created, without 800 contructors
+  - Good example is request builders.
+4. Composite - can be thought of as a paired delegate. But importantly implements both interfaces of the objects it composes.
+  - AccountIdentityComposite is a good example.
+5. Singleton - Kinda a copout answer imo, but basically an abstraction that guarantees the creation and return of only a single object.
+
+# Outdated JS Concepts They Somehow Still Ask About
+1. import vs require
+  - import is the standard module syntax for ES6, while require is the module syntax for nodjes.
+  - As of v12 (2019), Nodejs enables support for ES6 modules by default. So always use import/export.
+2. closure
+  - (Mozilla docs) "A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time."
+    - What this means is that an outer function can return an inner function, and that inner function can reference variables created in the outer function, even though the outer function has terminated and that scope has gone away. Effectively, this allows encapsulation because you can create accessors to values without exposing the fields directly.
+3. let vs var
+  - var's are scoped to the function body, let's are scoped to the immediate enclosing block. Which lowkey is how it should have been all along.
+  - Other minor differences: Let can't be redeclared. Let doesn't assign to window at global scope. Let doesn't hoist.
+4. ()=>{} vs function(){}
+  - "Arrow functions establish "this" based on the scope the arrow function is defined in.
+    - Thus they are not suitable for bind() etc calls
+  - Comparatively legacy functions create their own internal "this"
+  - "No matter how or where being executed, this value inside of an arrow function always equals this value from the outer function. In other words, the arrow function resolves this lexically."
